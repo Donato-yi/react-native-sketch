@@ -41,20 +41,21 @@ RCT_EXPORT_VIEW_PROPERTY(strokeThickness, NSInteger);
 
 - (instancetype)init
 {
-  if ((self = [super init])) {
-    self.sketchView = nil;
-  }
-
-  return self;
+    if ((self = [super init])) {
+        self.mySketchViews = [[NSMutableDictionary alloc] init];
+        self.sketchView = nil;
+    }
+    
+    return self;
 }
 
 - (UIView *)view
 {
-  if (!self.sketchView) {
+    NSString *key = [NSString stringWithFormat:@"%u", arc4random()];
     self.sketchView = [[RNSketch alloc] initWithFrame:CGRectZero];
-  }
-
-  return self.sketchView;
+    self.sketchView.key = key;
+    [self.mySketchViews setObject:self.sketchView forKey:key];
+    return self.sketchView;
 }
 
 #pragma mark - Exported methods

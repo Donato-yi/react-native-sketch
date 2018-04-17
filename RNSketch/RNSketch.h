@@ -30,4 +30,6 @@
 @property (nonatomic, strong) UIColor *strokeColor;
 @property (nonatomic, assign) NSInteger strokeThickness;
 
+@property NSString *key;
+
 @end

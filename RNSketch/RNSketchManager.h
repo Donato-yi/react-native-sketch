@@ -18,5 +18,6 @@
 @interface RNSketchManager : RCTViewManager
 
 @property (strong) RNSketch *sketchView;
+@property (strong, nonatomic) NSMutableDictionary *mySketchViews;
 
 @end;
