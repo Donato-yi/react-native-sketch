@@ -27,6 +27,7 @@ RCT_EXPORT_MODULE()
 
 #pragma mark - Events
 
+RCT_EXPORT_VIEW_PROPERTY(onCreate, RCTBubblingEventBlock);
 RCT_EXPORT_VIEW_PROPERTY(onChange, RCTBubblingEventBlock);
 RCT_EXPORT_VIEW_PROPERTY(onClear, RCTBubblingEventBlock);
 
@@ -93,13 +94,15 @@ RCT_EXPORT_METHOD(saveDrawing:(NSString *)encodedImage
   resolve(@{ @"path": fullPath });
 }
 
-RCT_EXPORT_METHOD(clearDrawing:(RCTPromiseResolveBlock)resolve
+RCT_EXPORT_METHOD(clearDrawing:(NSString*)key
+                  resolve:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject)
 {
   dispatch_async(dispatch_get_main_queue(), ^{
-    [self.sketchView clear];
-    resolve(@YES);
-  });
+      self.sketchView = [self.mySketchViews objectForKey:key];
+      [self.sketchView clear];
+      resolve(@YES);
+    });
 }
 
 #pragma mark - Class methods

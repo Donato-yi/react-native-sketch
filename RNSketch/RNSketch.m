@@ -46,6 +46,12 @@
   return self;
 }
 
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    if (_onCreate) _onCreate(@{ @"key": self.key });
+}
+
 RCT_NOT_IMPLEMENTED(- (instancetype)initWithCoder:(NSCoder *)aDecoder)
 
 #pragma mark - UIResponder methods

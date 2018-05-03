@@ -11,6 +11,7 @@ export default class Sketch extends React.Component {
   static propTypes = {
     fillColor: PropTypes.string,
     imageType: PropTypes.oneOf(['jpg', 'png']),
+    onCreate: PropTypes.func,
     onChange: PropTypes.func,
     onClear: PropTypes.func,
     strokeColor: PropTypes.string,
@@ -21,6 +22,7 @@ export default class Sketch extends React.Component {
   static defaultProps = {
     fillColor: null,
     imageType: 'png',
+    onCreate: () => {},
     onChange: () => {},
     onClear: () => {},
     strokeColor: '#000000',
@@ -40,7 +42,13 @@ export default class Sketch extends React.Component {
 
   state = {
     imageData: null,
+    key: '',
   };
+
+  onCreate = (event) => {
+    console.log('----------------------', event.nativeEvent)
+    this.setState({ ...event.nativeEvent});
+  }
 
   onChange = (event) => {
     const { imageData } = event.nativeEvent;
@@ -54,7 +62,10 @@ export default class Sketch extends React.Component {
     this.props.onClear();
   };
 
-  clear = () => SketchManager.clearDrawing();
+  clear = () => {
+    console.log('a-----------------------', this.state);
+    SketchManager.clearDrawing(this.state.key);
+  }
 
   save = () => {
     if (!this.state.imageData) return Promise.reject('No image provided!');
@@ -69,6 +80,7 @@ export default class Sketch extends React.Component {
       <RNSketch
         {...props}
         fillColor={fillColor}
+        onCreate={this.onCreate}
         onChange={this.onChange}
         onClear={this.onClear}
         strokeColor={strokeColor}

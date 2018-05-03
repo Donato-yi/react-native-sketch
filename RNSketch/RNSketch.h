@@ -21,6 +21,7 @@
 - (NSString *)base64Code;
 
 // Events
+@property (nonatomic, copy) RCTBubblingEventBlock onCreate;
 @property (nonatomic, copy) RCTBubblingEventBlock onChange;
 @property (nonatomic, copy) RCTBubblingEventBlock onClear;
 
